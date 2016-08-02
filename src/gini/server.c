@@ -8,7 +8,7 @@
 int
 main(int argc, char** argv)
 {
-    int sock = w_socket(AF_INET, SOCK_STREAM, 0);
+    int sock = w_socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     struct sockaddr_in serv_addr;
     memset((char*) &serv_addr, 0, sizeof(serv_addr));
@@ -19,3 +19,9 @@ main(int argc, char** argv)
 
     return EXIT_SUCCESS;
 }
+
+//void
+//usage()
+//{
+//    printf("");
+//}
