@@ -2,7 +2,9 @@ SERVER_OBJ = server.o \
              wrap_socket.o \
              wrap_stdlib.o
 
-CLIENT_OBJ = client.o
+CLIENT_OBJ = client.o \
+             wrap_stdlib.o \
+             config.o
 
 CC = $(CROSS_COMPILE)gcc
 LD = $(CROSS_COMPILE)ld
@@ -19,6 +21,9 @@ ginicln: $(CLIENT_OBJ)
 server.o: server.c
 	$(CC) -c -o $@ $^
 client.o: client.c
+	$(CC) -c -o $@ $^
+
+config.o: config.c
 	$(CC) -c -o $@ $^
 
 wrap_socket.o: wrap_socket.c
