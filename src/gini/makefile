@@ -1,5 +1,6 @@
 SERVER_OBJ = server.o \
-             wrap_socket.o
+             wrap_socket.o \
+             wrap_stdlib.o
 
 CLIENT_OBJ = client.o
 

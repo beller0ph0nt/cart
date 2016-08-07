@@ -22,7 +22,7 @@
         NSEC_IN_SEC * __profiler_sec + __profiler_nsec \
     double __profiler_sec_diff = \
         __profiler_nsec_diff / NSEC_IN_SEC \
-    printf("%s profile: %.9f sec", __FUNCTION__, __profiler_sec_diff);
+    printf("%s profile time: %.9f sec", __FUNCTION__, __profiler_sec_diff);
 #else
 #define PROFILER_PROLOG
 #define PROFILER_EPILOG
