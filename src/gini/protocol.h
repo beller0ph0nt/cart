@@ -27,6 +27,6 @@ typedef struct
 {
     cmd_t cmd;
     arg_t arg;
-} gini_cmd_t;
+} gini_msg_t;
 
 #endif // __PROTOCOL_H
