@@ -18,15 +18,15 @@ typedef double     gini_index_t;
 
 typedef union
 {
-    status_t     status;
     data_len_t   data_len;
     gini_index_t gini_index;
+    status_t     status;
 } arg_t;
 
 typedef struct
 {
-    cmd_t cmd;
     arg_t arg;
+    cmd_t cmd;
 } gini_msg_t;
 
 #endif // __PROTOCOL_H
