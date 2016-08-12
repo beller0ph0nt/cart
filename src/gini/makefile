@@ -6,6 +6,7 @@ CLIENT_OBJ = client.o \
              wrap_netdb.o \
              wrap_socket.o \
              wrap_stdlib.o \
+             wrap_unistd.o \
              config.o
 
 CC = $(CROSS_COMPILE)gcc
@@ -33,6 +34,8 @@ wrap_netdb.o: wrap_netdb.c
 wrap_socket.o: wrap_socket.c
 	$(CC) -c -o $@ $^
 wrap_stdlib.o: wrap_stdlib.c
+	$(CC) -c -o $@ $^
+wrap_unistd.o: wrap_unistd.c
 	$(CC) -c -o $@ $^
 
 clear:
