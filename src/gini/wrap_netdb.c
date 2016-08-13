@@ -1,9 +1,9 @@
 #include <errno.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "trace.h"
 #include "wrap_netdb.h"
+#include "wrap_stdlib.h"
 
 struct hostent*
 w_gethostbyname(const char* name)

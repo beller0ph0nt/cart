@@ -1,10 +1,10 @@
 #ifndef __TRACE_H
 #define __TRACE_H
 
-#include <stdio.h>
+#include "wrap_stdio.h"
 
 #define TRACE_ERROR(format, ...) \
-    printf("error:" format "\n", ## __VA_ARGS__)
+    printf("error: " format "\n", ## __VA_ARGS__)
 
 #define TRACE_WARNING(format, ...) \
     printf("warning: " format "\n", ## __VA_ARGS__)

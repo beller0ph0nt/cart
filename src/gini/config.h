@@ -3,6 +3,8 @@
 
 #include <sys/types.h>
 
+#define CONFIG_LINE_SIZE    512
+
 typedef union
 {
     struct
@@ -36,8 +38,15 @@ typedef struct
 } server_t;
 
 typedef __uint32_t servers_count_t;
+typedef server_t*  servers_list_t;
+
+servers_list_t
+config_cre_server_list(char* fname);
 
 servers_count_t
-config_cre_server_list(char* fname, server_t** list);
+config_get_server_count();
+
+void
+config_del_server_list(servers_list_t list);
 
 #endif // __CONFIG_H

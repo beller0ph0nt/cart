@@ -8,6 +8,7 @@
 #include "protocol.h"
 #include "wrap_socket.h"
 #include "wrap_stdlib.h"
+#include "wrap_unistd.h"
 
 int
 main(int argc, char** argv)
@@ -57,7 +58,7 @@ main(int argc, char** argv)
                  (struct sockaddr*) &cli_addr,
                  &cli_addr_len);
 
-        pid_t pid = fork();
+        pid_t pid = w_fork();
         if (pid == 0)
         {
             close(sock);
@@ -75,11 +76,6 @@ main(int argc, char** argv)
             }
 
             w_exit(EXIT_SUCCESS);
-        }
-        else if (pid == -1)
-        {
-            TRACE_ERROR("fork");
-            w_exit(EXIT_FAILURE);
         }
 
         close(cli_sock);
