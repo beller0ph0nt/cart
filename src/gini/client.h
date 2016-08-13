@@ -1,9 +1,9 @@
 #ifndef __CLIENT_H
 #define __CLIENT_H
 
-#include "wrap_unistd.h"
+//#include "wrap_unistd.h"
 
-pid_t
+void
 create_client(const char* host, int port);
 
 void

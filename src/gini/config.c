@@ -60,7 +60,7 @@ config_cre_server_list(char* fname)
             w_exit(EXIT_FAILURE);
         }
 
-        if (port < 0 || 255 < port)
+        if (port < 0 || 65535 < port)
         {
             TRACE_ERROR("(file: %s line: %d): "
                         "incorrect port",

@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include <string.h>
 
 #include "trace.h"
 #include "client.h"
 #include "config.h"
 #include "wrap_netdb.h"
+#include "wrap_stdio.h"
 #include "wrap_socket.h"
 #include "wrap_stdlib.h"
 #include "wrap_unistd.h"
@@ -15,33 +15,45 @@ main(int argc, char** argv)
     if (argc < 2)
         usage(argv[0]);
 
-    servers_list_t list = config_cre_server_list(argv[1]);
-//    servers_count_t list_len = config_get_server_count();
+    servers_list_t  list = config_cre_server_list(argv[1]);
+    servers_count_t list_len = config_get_server_count();
 
-//    int i = 0;
-//    for (i = 0; i < list_len; i++)
-//    {
-//        TRACE_INFO("%d.%d.%d.%d:%d",
-//                   list[i].ip.b1,
-//                   list[i].ip.b1,
-//                   list[i].ip.b1,
-//                   list[i].ip.b1,
-//                   list[i].port);
-//    }
+    pid_t pid = w_fork();
+    if (pid == 0)
+    {
+//        int i;
+//        for (i = 0; i < list_len; i++)
+//        {
+//            TRACE_INFO("%d.%d.%d.%d:%d",
+//                       list[i].ip.b1,
+//                       list[i].ip.b2,
+//                       list[i].ip.b3,
+//                       list[i].ip.b4,
+//                       list[i].port);
+//        }
+    }
+    else
+    {
+//        int i;
+//        for (i = 0; i < list_len; i++)
+//        {
+//            TRACE_INFO("%d.%d.%d.%d:%d",
+//                       list[i].ip.b1,
+//                       list[i].ip.b2,
+//                       list[i].ip.b3,
+//                       list[i].ip.b4,
+//                       list[i].port);
+//        }
+    }
 
     config_del_server_list(list);
-    //pid_t pid = create_client(argv[1], atoi(argv[2]));
 
     return EXIT_SUCCESS;
 }
 
-pid_t
+void
 create_client(const char* host, int port)
 {
-    pid_t pid = w_fork();
-    if (pid > 0)
-        return pid;
-
     int sock = w_socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     struct hostent* server = w_gethostbyname(host);
 
@@ -53,8 +65,6 @@ create_client(const char* host, int port)
     serv_addr.sin_port = htons(port);
 
     close(sock);
-
-    return pid;
 }
 
 void

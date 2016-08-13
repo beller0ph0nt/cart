@@ -5,6 +5,7 @@
 
 #include "trace.h"
 #include "server.h"
+#include "profiler.h"
 #include "protocol.h"
 #include "wrap_socket.h"
 #include "wrap_stdlib.h"
@@ -91,6 +92,9 @@ client_req_status(int                cli_sock,
                   struct sockaddr_in cli_addr,
                   status_t           srv_status)
 {
+    PROFILER_PROLOG;
+    TRACE_DEBUG("begin");
+
     gini_msg_t send_msg;
     send_msg.cmd = GINI_ANS_STATUS;
     send_msg.arg.status = srv_status;
@@ -102,12 +106,14 @@ client_req_status(int                cli_sock,
            (struct sockaddr*) &cli_addr,
            sizeof(cli_addr));
     close(cli_sock);
+    PROFILER_EPILOG;
 }
 
 void
 client_req_data(int                cli_sock,
                 struct sockaddr_in cli_addr)
 {
+    PROFILER_PROLOG;
     gini_msg_t send_msg;
     send_msg.cmd = GINI_ACK;
 
@@ -118,6 +124,7 @@ client_req_data(int                cli_sock,
            (struct sockaddr*) &cli_addr,
            sizeof(cli_addr));
     close(cli_sock);
+    PROFILER_EPILOG;
 }
 
 void
