@@ -3,6 +3,7 @@
 
 #include "trace.h"
 #include "assert.h"
+#include "profiler.h"
 #include "wrap_stdlib.h"
 
 void
@@ -15,6 +16,7 @@ w_exit(int status)
 void*
 w_malloc(size_t size)
 {
+    PROFILER_PROLOG;
     ASSERT(size > 0, "malloc size <= 0");
 
     void* ptr = malloc(size);
@@ -26,21 +28,25 @@ w_malloc(size_t size)
 
     TRACE_DEBUG(" allocate ptr: %p size: %d", ptr, size);
 
+    PROFILER_EPILOG;
     return ptr;
 }
 
 void
 w_free(void* ptr)
 {
+    PROFILER_PROLOG;
     ASSERT(ptr != NULL, "free NULL pointer");
     TRACE_DEBUG(" free ptr: %p", ptr);
 
     free(ptr);
+    PROFILER_EPILOG;
 }
 
 void*
 w_calloc(size_t nmemb, size_t size)
 {
+
     ASSERT(nmemb > 0, "calloc nmemb <= 0");
     ASSERT(size > 0, "calloc size <= 0");
 

@@ -2,19 +2,24 @@
 #define __TRACE_H
 
 #include "wrap_stdio.h"
+#include "wrap_unistd.h"
 
 #define TRACE_ERROR(format, ...) \
-    printf("error: " format "\n", ## __VA_ARGS__)
+    printf("[pid: %d] error: " format "\n", getpid(), ## __VA_ARGS__)
 
 #define TRACE_WARNING(format, ...) \
-    printf("warning: " format "\n", ## __VA_ARGS__)
+    printf("[pid: %d] warning: " format "\n", getpid(), ## __VA_ARGS__)
 
 #define TRACE_INFO(format, ...) \
-    printf("info: " format "\n", ## __VA_ARGS__)
+    printf("[pid: %d] info: " format "\n", getpid(), ## __VA_ARGS__)
 
 #ifdef DEBUG
 #define TRACE_DEBUG(format, ...) \
-    printf("[%s:%d] " format "\n", __FUNCTION__, __LINE__, ## __VA_ARGS__)
+    printf("[pid: %d][%s:%d] " format "\n", \
+           getpid(), \
+           __FUNCTION__, \
+           __LINE__, \
+           ## __VA_ARGS__)
 #else
 #define TRACE_DEBUG(format, ...)
 #endif // DEBUG

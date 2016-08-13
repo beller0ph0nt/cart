@@ -16,18 +16,18 @@ main(int argc, char** argv)
         usage(argv[0]);
 
     servers_list_t list = config_cre_server_list(argv[1]);
-    servers_count_t list_len = config_get_server_count();
+//    servers_count_t list_len = config_get_server_count();
 
-    int i = 0;
-    for (i = 0; i < list_len; i++)
-    {
-        TRACE_INFO("%d.%d.%d.%d:%d",
-                   list[i].ip.b1,
-                   list[i].ip.b1,
-                   list[i].ip.b1,
-                   list[i].ip.b1,
-                   list[i].port);
-    }
+//    int i = 0;
+//    for (i = 0; i < list_len; i++)
+//    {
+//        TRACE_INFO("%d.%d.%d.%d:%d",
+//                   list[i].ip.b1,
+//                   list[i].ip.b1,
+//                   list[i].ip.b1,
+//                   list[i].ip.b1,
+//                   list[i].port);
+//    }
 
     config_del_server_list(list);
     //pid_t pid = create_client(argv[1], atoi(argv[2]));

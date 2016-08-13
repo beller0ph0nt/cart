@@ -1,4 +1,5 @@
 SERVER_OBJ = server.o \
+             wrap_time.o \
              wrap_socket.o \
              wrap_stdlib.o \
              wrap_unistd.o

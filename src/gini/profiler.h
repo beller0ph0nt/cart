@@ -1,6 +1,7 @@
 #ifndef __PROFILER_H
 #define __PROFILER_H
 
+#include "trace.h"
 #include "wrap_time.h"
 #include "wrap_stdio.h"
 
@@ -24,9 +25,9 @@
         NSEC_IN_SEC * __profiler_sec + __profiler_nsec; \
     double __profiler_sec_diff = \
         __profiler_nsec_diff / NSEC_IN_SEC; \
-    printf("=======> %s profile time: %.9f sec <=======\n", \
-           __FUNCTION__, \
-           __profiler_sec_diff);
+    TRACE_INFO("=======> time: %.9f (sec) func: %s <=======", \
+           __profiler_sec_diff, \
+           __FUNCTION__);
 #else
 #define PROFILER_PROLOG
 #define PROFILER_EPILOG
