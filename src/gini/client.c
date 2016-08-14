@@ -21,29 +21,29 @@ main(int argc, char** argv)
     pid_t pid = w_fork();
     if (pid == 0)
     {
-//        int i;
-//        for (i = 0; i < list_len; i++)
-//        {
-//            TRACE_INFO("%d.%d.%d.%d:%d",
-//                       list[i].ip.b1,
-//                       list[i].ip.b2,
-//                       list[i].ip.b3,
-//                       list[i].ip.b4,
-//                       list[i].port);
-//        }
+        int i;
+        for (i = 0; i < list_len; i++)
+        {
+            TRACE_INFO("%d.%d.%d.%d:%d",
+                       list[i].ip.b1,
+                       list[i].ip.b2,
+                       list[i].ip.b3,
+                       list[i].ip.b4,
+                       list[i].port);
+        }
     }
     else
     {
-//        int i;
-//        for (i = 0; i < list_len; i++)
-//        {
-//            TRACE_INFO("%d.%d.%d.%d:%d",
-//                       list[i].ip.b1,
-//                       list[i].ip.b2,
-//                       list[i].ip.b3,
-//                       list[i].ip.b4,
-//                       list[i].port);
-//        }
+        int i;
+        for (i = 0; i < list_len; i++)
+        {
+            TRACE_INFO("%d.%d.%d.%d:%d",
+                       list[i].ip.b1,
+                       list[i].ip.b2,
+                       list[i].ip.b3,
+                       list[i].ip.b4,
+                       list[i].port);
+        }
     }
 
     config_del_server_list(list);

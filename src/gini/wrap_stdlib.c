@@ -17,7 +17,7 @@ void*
 w_malloc(size_t size)
 {
     PROFILER_PROLOG;
-    ASSERT(size > 0, "malloc size <= 0");
+    ASSERT(size > 0);
 
     void* ptr = malloc(size);
     if (ptr == NULL)
@@ -36,7 +36,7 @@ void
 w_free(void* ptr)
 {
     PROFILER_PROLOG;
-    ASSERT(ptr != NULL, "free NULL pointer");
+    ASSERT(ptr != NULL);
     TRACE_DEBUG(" free ptr: %p", ptr);
 
     free(ptr);
@@ -46,9 +46,8 @@ w_free(void* ptr)
 void*
 w_calloc(size_t nmemb, size_t size)
 {
-
-    ASSERT(nmemb > 0, "calloc nmemb <= 0");
-    ASSERT(size > 0, "calloc size <= 0");
+    ASSERT(nmemb > 0);
+    ASSERT(size > 0);
 
     void* ptr = calloc(nmemb, size);
     if (ptr == NULL)
@@ -65,7 +64,7 @@ w_calloc(size_t nmemb, size_t size)
 void*
 w_realloc(void* ptr, size_t size)
 {
-    ASSERT(ptr != NULL || size > 0, "realloc NULL pointer with size <= 0");
+    ASSERT(ptr != NULL || size > 0);
 
     void* p = realloc(ptr, size);
     if (p == NULL)

@@ -5,10 +5,13 @@
 #include "wrap_stdlib.h"
 
 #ifdef ASSERTION
-#define ASSERT(expr, format, ...) \
-    if (!(expr)) \
+#define ASSERT(expr) \
+    if (expr) \
     { \
-        TRACE_ERROR(format, ## __VA_ARGS__); \
+    } \
+    else \
+    { \
+        TRACE_ERROR("ASSERT (" #expr ") file: %s:%d", __FILE__, __LINE__); \
         w_exit(EXIT_FAILURE); \
     }
 #else
