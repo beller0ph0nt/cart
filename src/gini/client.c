@@ -19,7 +19,7 @@ main(int argc, char** argv)
     servers_count_t list_len = config_get_server_count();
 
     pid_t pid = w_fork();
-    if (pid == 0)
+    if (pid == CHILD_PROCESS_PID)
     {
         int i;
         for (i = 0; i < list_len; i++)
@@ -59,8 +59,8 @@ create_client(const char* host, int port)
 
     struct sockaddr_in serv_addr;
     serv_addr.sin_family = AF_INET;
-    strncpy((char *) &serv_addr.sin_addr.s_addr,
-            (char *) server->h_addr,
+    strncpy((char*) &serv_addr.sin_addr.s_addr,
+            (char*) server->h_addr,
             server->h_length);
     serv_addr.sin_port = htons(port);
 

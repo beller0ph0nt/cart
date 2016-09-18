@@ -3,6 +3,8 @@
 
 #include <unistd.h>
 
+#define CHILD_PROCESS_PID	0
+
 pid_t
 w_fork(void);
 

@@ -20,19 +20,19 @@ main(int argc, char** argv)
     char ch;
     while ((ch = getopt(argc,argv,"?hp:")) != -1)
     {
-		switch (ch)
-		{
-		case 'p':
+        switch (ch)
+        {
+        case 'p':
             port = atoi(optarg);
             break;
-		case 'h':
-		case '?':
-		default:
+        case 'h':
+        case '?':
+        default:
             usage(argv[0]);
         };
-	};
+    };
 
-	if (optind < argc)
+    if (optind < argc)
         usage(argv[0]);
 
     int sock = w_socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -60,7 +60,7 @@ main(int argc, char** argv)
                  &cli_addr_len);
 
         pid_t pid = w_fork();
-        if (pid == 0)
+        if (pid == CHILD_PROCESS_PID)
         {
             close(sock);
 
