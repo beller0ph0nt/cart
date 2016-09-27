@@ -1,15 +1,13 @@
 #include <string.h>
 
-#include <debug/trace.h>
-
-#include <gini/client.h>
-#include <gini/config.h>
-
-#include <wrap/netdb.h>
-#include <wrap/stdio.h>
-#include <wrap/socket.h>
-#include <wrap/stdlib.h>
-#include <wrap/unistd.h>
+#include "trace.h"
+#include "client.h"
+#include "config.h"
+#include "wrap_netdb.h"
+#include "wrap_stdio.h"
+#include "wrap_socket.h"
+#include "wrap_stdlib.h"
+#include "wrap_unistd.h"
 
 int
 main(int argc, char** argv)

@@ -1,6 +1,9 @@
-OBJ = client.o
-OBJ += config.o
-OBJ += server.o
+OBJ = netdb.o
+OBJ += socket.o
+OBJ += stdio.o
+OBJ += stdlib.o
+OBJ += time.o
+OBJ += unistd.o
 
 .PHONY: all clear
 

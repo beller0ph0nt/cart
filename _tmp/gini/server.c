@@ -3,15 +3,13 @@
 
 #include <netinet/in.h>
 
-#include <debug/trace.h>
-#include <debug/profiler.h>
-
-#include <gini/server.h>
-#include <gini/protocol.h>
-
-#include <wrap/socket.h>
-#include <wrap/stdlib.h>
-#include <wrap/unistd.h>
+#include "trace.h"
+#include "server.h"
+#include "profiler.h"
+#include "protocol.h"
+#include "wrap_socket.h"
+#include "wrap_stdlib.h"
+#include "wrap_unistd.h"
 
 int
 main(int argc, char** argv)

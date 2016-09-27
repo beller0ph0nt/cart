@@ -1,12 +1,10 @@
 #include <string.h>
 
-#include <debug/trace.h>
-#include <debug/profiler.h>
-
-#include <gini/config.h>
-
-#include <wrap/stdio.h>
-#include <wrap/stdlib.h>
+#include "trace.h"
+#include "config.h"
+#include "profiler.h"
+#include "wrap_stdio.h"
+#include "wrap_stdlib.h"
 
 static servers_count_t servers_count = 0;
 

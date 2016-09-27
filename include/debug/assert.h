@@ -16,7 +16,7 @@
         w_exit(EXIT_FAILURE); \
     }
 #else
-#define ASSERT(expr, format, ...)
+#define ASSERT(expr)
 #endif // ASSERT
 
 #endif // __ASSERT_H
