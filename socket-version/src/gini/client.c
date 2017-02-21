@@ -1,13 +1,15 @@
 #include <string.h>
 
-#include "trace.h"
-#include "client.h"
-#include "config.h"
-#include "wrap_netdb.h"
-#include "wrap_stdio.h"
-#include "wrap_socket.h"
-#include "wrap_stdlib.h"
-#include "wrap_unistd.h"
+#include <debug/trace.h>
+
+#include <gini/client.h>
+#include <gini/config.h>
+
+#include <wrap/netdb.h>
+#include <wrap/stdio.h>
+#include <wrap/socket.h>
+#include <wrap/stdlib.h>
+#include <wrap/unistd.h>
 
 int
 main(int argc, char** argv)
@@ -17,6 +19,13 @@ main(int argc, char** argv)
 
     servers_list_t  list = config_cre_server_list(argv[1]);
     servers_count_t list_len = config_get_server_count();
+
+
+    /*
+    1. получить данные для расчета
+    2. получить список серверов
+    3. каждую колонку отправлять на отдельный сервер
+    */
 
     pid_t pid = w_fork();
     if (pid == CHILD_PROCESS_PID)

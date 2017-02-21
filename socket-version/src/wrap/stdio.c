@@ -1,6 +1,7 @@
-#include "trace.h"
-#include "wrap_stdio.h"
-#include "wrap_stdlib.h"
+#include <wrap/stdio.h>
+#include <wrap/stdlib.h>
+
+#include <debug/trace.h>
 
 FILE*
 w_fopen(const char* path, const char* mode)
@@ -8,7 +9,7 @@ w_fopen(const char* path, const char* mode)
     FILE* fd = fopen(path, mode);
     if (fd == NULL)
     {
-        TRACE_ERROR("fopen failure");
+        TRACE_ERROR("fopen failure path: %s mode %s", path, mode);
         w_exit(EXIT_FAILURE);
     }
 
