@@ -5,7 +5,7 @@
     хранения числовых значений использовать float (4 байта), а для категориальных
     uint32_t (4 байта) или double и uint64_t + соответствующие преобразования из
     сырых данных в формат с плавающей точкой.
-*/
+*********************************************************************************/
 
 
 #include <stdio.h>
@@ -21,6 +21,12 @@ typedef uint32_t    ATTR_COUNT_T;
 typedef float       ATTR_NUMERIC_VAL_T;
 typedef uint32_t    ATTR_CATEGORIC_VAL_T;
 
+union VALUE_T
+{
+    ATTR_NUMERIC_VAL_T      num;
+    ATTR_CATEGORIC_VAL_T    cat;
+};
+
 struct __attribute__((packed, aligned(1))) ATTR_HEADER_T
 {
     ATTR_TYPE_T     type;
@@ -29,19 +35,19 @@ struct __attribute__((packed, aligned(1))) ATTR_HEADER_T
 struct ATTR_T
 {
     struct ATTR_HEADER_T    header;
-    void*                   val;
 };
 
 struct TABLE_HEADER_T
 {
     ATTR_COUNT_T    attr_count;
-    ATTR_COUNT_T    attr_vals_count;
+    ATTR_COUNT_T    vals_count;
 };
 
 struct TABLE_T
 {
     struct TABLE_HEADER_T   header;
     struct ATTR_T*          attr;
+    union  VALUE_T*         val;
 };
 
 
@@ -51,7 +57,7 @@ void
 print_table(struct TABLE_T* table)
 {
     ATTR_COUNT_T i, j;
-    for (i = 0; i < table->header.attr_vals_count; i++)
+    for (i = 0; i < table->header.vals_count; i++)
     {
         for (j = 0; j < table->header.attr_count; j++)
         {
@@ -112,7 +118,7 @@ main()
         fread(&table.attr[i].header, sizeof(struct ATTR_HEADER_T), 1, fd);
 
         size_t size_of_val = get_attr_val_size_by_type(table.attr[i].header.type);
-        table.attr[i].val = calloc(table.header.attr_vals_count, size_of_val);
+        table.attr[i].val = calloc(table.header.vals_count, size_of_val);
         fread(table.attr[i].val, size_of_val, table.header.attr_vals_count, fd);
     }
 
