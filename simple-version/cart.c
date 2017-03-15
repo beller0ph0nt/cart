@@ -58,7 +58,7 @@ struct TABLE_T
 
 
 
-
+/*
 void
 print_table(struct TABLE_T* table)
 {
@@ -72,6 +72,7 @@ print_table(struct TABLE_T* table)
         printf("\n");
     }
 }
+*/
 
 void
 split_table(struct TABLE_T* table,
@@ -80,6 +81,7 @@ split_table(struct TABLE_T* table,
 {
 }
 
+/*
 size_t
 get_attr_val_size_by_type(ATTR_TYPE_T type)
 {
@@ -95,6 +97,7 @@ get_attr_val_size_by_type(ATTR_TYPE_T type)
 
     return val_size;
 }
+*/
 
 
 /*
@@ -117,7 +120,10 @@ main()
 
     fread(&table.header, sizeof(struct TABLE_HEADER_T), 1, fd);
     table.attr = calloc(table.header.attr_count, sizeof(struct ATTR_T));
+    fread(table.attr, sizeof(struct ATTR_T), table.header.attr_count, fd);
+    table.val = calloc(table.header.attr_count * table.header.val_count, sizeof(struct VAL_T));
 
+/*
     int i;
     for (i = 0; i < table.header.attr_count; i++)
     {
@@ -127,6 +133,7 @@ main()
         table.attr[i].val = calloc(table.header.vals_count, size_of_val);
         fread(table.attr[i].val, size_of_val, table.header.attr_vals_count, fd);
     }
+*/
 
     // Разбиение...
     struct TABLE_T left_table;
