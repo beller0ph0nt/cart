@@ -3,9 +3,9 @@
 
 void group_int_num(int* array, int len)
 {
-    int  i   = 0;
-    int  min = array[0];
-    int  max = min;
+    int i   = 0;
+    int min = array[0];
+    int max = min;
 
     for (i = 1; i < len; i++)
     {

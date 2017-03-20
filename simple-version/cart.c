@@ -21,49 +21,91 @@
 #define ATTR_TYPE_NUMERICAL      0x1
 #define ATTR_TYPE_CATEGORICAL    0x2
 
-typedef uint8_t     ATTR_TYPE_T;
-typedef uint32_t    ATTR_COUNT_T;
+typedef uint8_t  attr_type_t;
+typedef uint32_t attr_count_t;
 
-typedef float       ATTR_NUMERIC_VAL_T;
-typedef uint32_t    ATTR_CATEGORIC_VAL_T;
+typedef float    attr_num_val_t;
+typedef uint32_t attr_cat_val_t;
 
-union VALUE_T
+union value_t
 {
-    ATTR_NUMERIC_VAL_T      num;
-    ATTR_CATEGORIC_VAL_T    cat;
+    attr_num_val_t num;
+    attr_cat_val_t cat;
 };
 
-struct __attribute__((packed, aligned(1))) ATTR_HEADER_T
+struct __attribute__((packed, aligned(1))) attr_header_t
 {
-    ATTR_TYPE_T     type;
+    attr_type_t type;
 };
 
-struct ATTR_T
+struct attr_t
 {
-    struct ATTR_HEADER_T    header;
+    struct attr_header_t header;
 };
 
-struct TABLE_HEADER_T
+struct table_header_t
 {
-    ATTR_COUNT_T    attr_count;
-    ATTR_COUNT_T    vals_count;
+    attr_count_t attr_count;
+    attr_count_t vals_count;
 };
 
-struct TABLE_T
+struct table_t
 {
-    struct TABLE_HEADER_T   header;
-    struct ATTR_T*          attr;
-    union  VALUE_T*         val;
+    struct table_header_t   header;
+    struct attr_t*          attr;
+    union  value_t*         val;
 };
 
 
+
+
+float
+gini_int(int* array, int len)
+{
+    int i   = 0;
+    int min = array[0];
+    int max = min;
+
+    for (i = 1; i < len; i++)
+    {
+        int val = array[i];
+        if (val < min)
+            min = val;
+        else if (val > max)
+            max = val;
+    }
+
+    int  number_of_groups = max - min + 1;
+    int* groups           = calloc(number_of_groups, sizeof(int));
+
+    for (i = 0; i < len; i++)
+    {
+        int hash = array[i] - min;
+        groups[hash]++;
+    }
+
+    int sum = 0;
+    for (i = 0; i < number_of_groups; i++)
+    {
+        int val = groups[i];
+        if (val != 0)
+        {
+            sum += (val * val);
+        }
+    }
+
+    free(groups);
+
+    return 1 - (float) sum / (len * len);
+}
 
 /*
 void
 print_table(struct TABLE_T* table)
 {
     ATTR_COUNT_T i, j;
-    for (i = 0; i < table->header.vals_count; i++)
+    for (i = 0; i < t
+able->header.vals_count; i++)
     {
         for (j = 0; j < table->header.attr_count; j++)
         {
@@ -75,9 +117,9 @@ print_table(struct TABLE_T* table)
 */
 
 void
-split_table(struct TABLE_T* table,
-            struct TABLE_T* left_split,
-            struct TABLE_T* right_split)
+split_table(struct table_t* table,
+            struct table_t* left_split,
+            struct table_t* right_split)
 {
 }
 
@@ -115,13 +157,23 @@ calc_cat_attr_gini_index(ATTR_CATEGORIC_T *vals, ATTR_COUNT_T count)
 int
 main()
 {
+/*
     FILE*          fd    = stdin;
-    struct TABLE_T table = { 0 };
+    struct table_t table = { 0 };
 
-    fread(&table.header, sizeof(struct TABLE_HEADER_T), 1, fd);
-    table.attr = calloc(table.header.attr_count, sizeof(struct ATTR_T));
-    fread(table.attr, sizeof(struct ATTR_T), table.header.attr_count, fd);
-    table.val = calloc(table.header.attr_count * table.header.val_count, sizeof(struct VAL_T));
+    fread(&table.header, sizeof(struct table_header_t), 1, fd);
+    table.attr = calloc(table.header.attr_count, sizeof(struct attr_t));
+    fread(table.attr, sizeof(struct attr_t), table.header.attr_count, fd);
+
+    int data_size = table.header.attr_count * table.header.vals_count;
+    table.val = calloc(data_size, sizeof(union value_t));
+    fread(table.val, sizeof(union value_t), data_size, fd);
+*/
+
+
+    int test[10] = { 1, 2, 1, 4, 1, 6, 7, 8, 9, 10 };
+    float test_gini = gini_int(test, 10);
+    printf("test gini index: %f\n", test_gini);
 
 /*
     int i;
@@ -136,9 +188,9 @@ main()
 */
 
     // Разбиение...
-    struct TABLE_T left_table;
-    struct TABLE_T right_table;
-    split_table(&table, &left_table, &right_table);
+//    struct table_t left_table;
+//    struct table_t right_table;
+//    split_table(&table, &left_table, &right_table);
 
 //    ATTR_HEADER_T attr_header;
 
