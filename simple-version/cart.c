@@ -18,6 +18,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include <time.h>
+
 #define ATTR_TYPE_NUMERICAL      0x1
 #define ATTR_TYPE_CATEGORICAL    0x2
 
@@ -99,6 +101,82 @@ gini_int(int* array, int len)
     return 1 - (float) sum / (len * len);
 }
 
+#define NSEC_IN_SEC     1000000000
+#define CLOCK_ID        CLOCK_REALTIME
+#define ITERATIONS      1
+
+void
+test_gini_int(int elements)
+{
+    srandom(666);
+
+//    int test[10] = { 1, 2, 1, 4, 1, 6, 7, 8, 9, 10 };
+    int* test = calloc(elements, sizeof(int));
+    int i = 0;
+    float test_gini = 0;
+
+    for (i = 0; i < elements; i++)
+    {
+        test[i] = random() % 10000;
+    }
+
+    struct timespec start;
+    struct timespec stop;
+
+    long   sec       = 0;
+    long   nsec      = 0;
+    double nsec_diff = 0;
+    double sec_diff  = 0;
+
+    double sec_diff_min = 0;
+    double sec_diff_max = 0;
+    double sec_diff_avg = 0;
+    double sec_diff_sum = 0;
+
+    for (i = 0; i < ITERATIONS; i++)
+    {
+        clock_gettime(CLOCK_ID, &start);
+        test_gini = gini_int(test, elements);
+        clock_gettime(CLOCK_ID, &stop);
+
+        sec       = stop.tv_sec - start.tv_sec;
+        nsec      = stop.tv_nsec - start.tv_nsec;
+        nsec_diff = NSEC_IN_SEC * sec + nsec;
+        sec_diff  = nsec_diff / NSEC_IN_SEC;
+
+        if (sec_diff_sum == 0)
+            sec_diff_min = sec_diff_max = sec_diff;
+        else
+        {
+            if (sec_diff < sec_diff_min)
+                sec_diff_min = sec_diff;
+            else if (sec_diff > sec_diff_max)
+                sec_diff_max = sec_diff;
+        }
+
+        sec_diff_sum += sec_diff;
+    }
+    sec_diff_avg = sec_diff_sum / ITERATIONS;
+
+    printf("min: %.9f (sec)\n"
+           "avg: %.9f (sec)\n"
+           "max: %.9f (sec)\n",
+           sec_diff_min,
+           sec_diff_avg,
+           sec_diff_max);
+
+    printf("test gini index: %f\n", test_gini);
+
+    free(test);
+}
+
+
+
+
+
+
+
+
 /*
 void
 print_table(struct TABLE_T* table)
@@ -171,9 +249,11 @@ main()
 */
 
 
-    int test[10] = { 1, 2, 1, 4, 1, 6, 7, 8, 9, 10 };
-    float test_gini = gini_int(test, 10);
-    printf("test gini index: %f\n", test_gini);
+//    int test[10] = { 1, 2, 1, 4, 1, 6, 7, 8, 9, 10 };
+//    float test_gini = gini_int(test, 10);
+//    printf("test gini index: %f\n", test_gini);
+
+    test_gini_int(20000000);
 
 /*
     int i;
